@@ -12,7 +12,11 @@ public class UnoManager : GameManager {
     private void Start()
     {
         instance = this;
+        SetupCardVisuals();
+    }
 
+    private void SetupCardVisuals()
+    {
         int tabX = 0; // Cosmetics... =D
         int tabZ = 0;
         GameObject card; //This will hold the card objects until they are added to the list;
@@ -34,7 +38,7 @@ public class UnoManager : GameManager {
 
                     card = Instantiate(CardPrefab); // Creating a clone of the card prefab
                     card.transform.parent = transform; // Assigning the manager as its pareint in the scene hierarchy
-                    card.transform.localPosition = new Vector3(tabX * 100, 0, tabZ * 10); // setting local position, relative to the manager
+                    card.transform.localPosition = new Vector3(tabX * 0.5f, 0, tabZ * 0.1f); // setting local position, relative to the manager
                     card.AddComponent<Card>(); // adding the card script to the object.
                     card.GetComponent<Card>().build("UI/UNO/" + color + "_" + i, "UI/UNO/UNOBack", color + "_" + i); //Building the card. Sets the visuals.
                     tabX++;
@@ -46,7 +50,7 @@ public class UnoManager : GameManager {
                     color = "Red";
                     type = "X";
                     if (j >= 2)
-                        color = "Blue";                        
+                        color = "Blue";
                     if (j >= 4)
                         color = "Yellow";
                     if (j >= 6)
@@ -58,7 +62,7 @@ public class UnoManager : GameManager {
 
                     card = Instantiate(CardPrefab); // Creating a clone of the card prefab
                     card.transform.parent = transform; // Assigning the manager as its pareint in the scene hierarchy
-                    card.transform.localPosition = new Vector3(tabX * 100, 0, tabZ * 10);// setting local position, relative to the manager
+                    card.transform.localPosition = new Vector3(tabX * 0.5f, 0, tabZ * 0.1f);// setting local position, relative to the manager
                     card.AddComponent<Card>(); // adding the card script to the object.
                     card.GetComponent<Card>().build("UI/UNO/" + color + "_" + type, "UI/UNO/UNOBack", color + "_" + type); //Building the card. Sets the visuals.
                     tabX++;
@@ -73,7 +77,7 @@ public class UnoManager : GameManager {
 
                 card = Instantiate(CardPrefab); // Creating a clone of the card prefab
                 card.transform.parent = transform; // Assigning the manager as its pareint in the scene hierarchy
-                card.transform.localPosition = new Vector3(tabX * 100, 0, tabZ * 10); // setting local position, relative to the manager
+                card.transform.localPosition = new Vector3(tabX * 0.5f, 0, tabZ * 0.1f); // setting local position, relative to the manager
                 card.AddComponent<Card>(); // adding the card script to the object.
                 card.GetComponent<Card>().build("UI/UNO/" + type, "UI/UNO/UNOBack", type); //Building the card. Sets the visuals.
                 tabX++;
