@@ -9,23 +9,23 @@ public class GameManager : MonoBehaviour {
     /// <summary>
     /// static reference to this (the current game manager) object.
     /// </summary>
-    public static GameManager instance; 
+    public static GameManager instance;
     /// <summary>
     /// List of current players
     /// </summary>
-    private List<Player> players;
+    public List<Player> players = new List<Player>();
     /// <summary>
     /// List of decks. For example UNO has only one deck,but Speed have two.
     /// </summary>
-    private List<Deck> decks;
+    public List<Deck> decks = new List<Deck>();
     /// <summary>
     /// Stack of played cards. Same as decks... UNO have only one, Speed have 2, solitaire have 7
     /// </summary>
-    private List<Pile> piles;
+    public List<Pile> piles = new List<Pile>();
     /// <summary>
     /// List of cards. Need only to setup table. Not used anywhere else.
     /// </summary>
-    private List<Card> cards;
+    protected List<Card> cards = new List<Card>();
 
     /// <summary>
     /// The cards prefab. The excact object the user will see. This will hold the images,
