@@ -12,6 +12,38 @@ public class Hand : MonoBehaviour {
     /// <summary>
     /// Contained cards.
     /// </summary>
-    private List<Card> cards;
+    private List<Card> cards = new List<Card>();
+    /// <summary>
+    /// Deck to draw cards from.
+    /// </summary>
+    private Deck deck;
+
+    public void SetDeck(Deck d) {
+        deck = d;
+    }
+
+    /// <summary>
+    /// Draw a card from the deck
+    /// </summary>
+    public void DrawCard()
+    {
+        if (deck == null) return;
+        cards.Add(deck.DrawCard());
+        PositionCards();
+    }
+
+    /// <summary>
+    /// Puts cards to corresponding positions.
+    /// </summary>
+    private void PositionCards()
+    {
+        for (int i = 0; i < cards.Count; i++)
+        {
+            cards[i].transform.parent = transform; //order in hierarchy
+            cards[i].transform.localPosition = new Vector3((i * 1) - ((cards.Count - 1) / 2.0f), 0, 0); //set position based on index
+            cards[i].transform.localRotation = Quaternion.Euler(0, 180, 0); // rotation
+            cards[i].SetOrderInLayer(-i); // dont need to know (sets order in layer, which defines which sprite to draw later, so which one is in front)
+        }
+    }
 
 }

@@ -18,6 +18,10 @@ public class Card : MonoBehaviour {
     /// Cardback sprite renderer
     /// </summary>
     private SpriteRenderer back;
+    /// <summary>
+    /// property of value
+    /// </summary>
+    public string Value { get { return value; } }
 
     /// <summary>
     /// Setting the card up. Loading and settings up its visuals, and value
@@ -33,6 +37,16 @@ public class Card : MonoBehaviour {
 
         front.sprite = Resources.Load<Sprite>(_front); //setting the front sprite
         back.sprite = Resources.Load<Sprite>(_back); //setting the back sprite
+    }
+
+    /// <summary>
+    /// Dont need to know. It sets the drawing order, so it defines which sprite is in front.
+    /// </summary>
+    /// <param name="i">Order value.</param>
+    public void SetOrderInLayer(int i)
+    {
+        front.sortingOrder = i;
+        back.sortingOrder = i;
     }
 
 }
