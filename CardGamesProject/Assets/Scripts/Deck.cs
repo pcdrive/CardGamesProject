@@ -44,7 +44,7 @@ public class Deck : MonoBehaviour {
     } 
 
     /// <summary>
-    /// Draws a card fron top of the deck.
+    /// Draws a card from top of the deck.
     /// </summary>
     /// <returns>The card drawn.</returns>
     public Card DrawCard()
@@ -78,6 +78,7 @@ public class Deck : MonoBehaviour {
             cardTransform.parent = transform;
             cardTransform.rotation = Quaternion.Euler(90, 0, 0);
             cardTransform.localPosition = new Vector3(0, 0.005f * (i++), 0);
+            card.SetOrderInLayer(i);
         }
     }
 }

@@ -17,9 +17,25 @@ public class Hand : MonoBehaviour {
     /// Deck to draw cards from.
     /// </summary>
     private Deck deck;
+    /// <summary>
+    /// Is this hand the owner of the current turn.
+    /// </summary>
+    private bool isInTurn = false;
+
+    /// <summary>
+    /// Event for putting a card to the pile.
+    /// </summary>
+    /// <param name="sender">The current player.</param>
+    public delegate void EndOfTurnEvent(Player sender, Card chosenCard);
+    public event EndOfTurnEvent EndOfTurn;
 
     public void SetDeck(Deck d) {
         deck = d;
+    }
+
+    public void SetTurn()
+    {
+        isInTurn = true;
     }
 
     /// <summary>
@@ -46,4 +62,33 @@ public class Hand : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Thowring a card to the pile.
+    /// </summary>
+    /// <param name="c">Card chosen to throw.</param>
+    public void ChooseCard(Card c)
+    {
+        if (EndOfTurn != null)
+        {
+            isInTurn = false;
+            cards.Remove(c);
+            EndOfTurn(transform.parent.GetComponent<Player>(), c);
+        }
+        PositionCards();
+    }
+    /// <summary>
+    /// ForTestOnly!!! TODO: REMOVE THIS
+    /// </summary>
+    /// <param name="c"></param>
+    public void ChooseCard(int idx)
+    {
+        if (EndOfTurn != null && isInTurn)
+        {
+            isInTurn = false;
+            Card c = cards[idx];
+            cards.RemoveAt(idx);
+            EndOfTurn(transform.parent.GetComponent<Player>(), c);
+        }
+        PositionCards();
+    }
 }
