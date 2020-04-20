@@ -16,7 +16,7 @@ public class Player : MonoBehaviour {
     /// <summary>
     /// Unity uses this method to initialize objects. (Awake (creation) - Start (initialization) - Update(usual updates by frames))
     /// </summary>
-    private void Start()
+    private void Awake()
     {
         hand = transform.Find("Hand").GetComponent<Hand>();
     }
