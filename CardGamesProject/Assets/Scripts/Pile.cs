@@ -13,6 +13,26 @@ public class Pile : MonoBehaviour
     /// <summary>
     /// Contained cards.
     /// </summary>
-    private List<Card> cards;
+    private List<Card> cards = new List<Card>();
+
+    public void AddCard(Card card)
+    {
+        cards.Add(card);
+        PositionCards();
+    }
+
+    /// <summary>
+    /// Puts cards to corresponding positions.
+    /// </summary>
+    private void PositionCards()
+    {
+        for (int i = 0; i < cards.Count; i++)
+        {
+            cards[i].transform.parent = transform; //order in hierarchy
+            cards[i].transform.localPosition = new Vector3(Random.Range(0, 0.3f), (i * 1) - ((cards.Count - 1) / 2.0f), Random.Range(0, 0.3f)); //set position based on index
+            cards[i].transform.localRotation = Quaternion.Euler(-90, 165 + Random.Range(0,30), 0); // rotation
+            cards[i].SetOrderInLayer(-i); // dont need to know (sets order in layer, which defines which sprite to draw later, so which one is in front)
+        }
+    }
 
 }

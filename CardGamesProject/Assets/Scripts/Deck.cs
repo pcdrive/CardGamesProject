@@ -56,6 +56,16 @@ public class Deck : MonoBehaviour {
     }
 
     /// <summary>
+    /// Shuffle a card into the deck.
+    /// </summary>
+    /// <param name="card">Card to shuffle in.</param>
+    public void ShuffleInCard(Card card)
+    {
+        cards.Insert(Random.Range(0, cards.Count - 1), card);
+        PositionCards();
+    }
+
+    /// <summary>
     /// Sets the cards into position to look like a firm deck on the desk. ^^
     /// TODO: card -> position Lerp
     /// </summary>

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,6 +19,28 @@ public class UnoManager : GameManager {
 
         decks[0].SetCards(cards);
         decks[0].Shuffle();
+
+        //TODO: Player count
+        foreach (Player p in players) // set hand reference to deck to draw cards from.
+        {
+            p.GetHand().SetDeck(decks[0]);
+        }
+
+        for (int i = 0; i < 7; i++) // draw 7 cards to everyones hand.
+        {
+            foreach (Player p in players)
+            {
+                p.GetHand().DrawCard();
+            }
+        }
+
+        Card starter = decks[0].DrawCard();
+        while (!Char.IsDigit(starter.Value[starter.Value.Length - 1])) // Cannot start with non numeric card.
+        {
+            decks[0].ShuffleInCard(starter);
+            starter = decks[0].DrawCard();
+        }
+        piles[0].AddCard(starter); // Add top card of the remaining deck to pile to start the game with;
     }
 
     private void SetupCards()
