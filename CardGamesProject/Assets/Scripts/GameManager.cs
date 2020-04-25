@@ -11,6 +11,15 @@ public class GameManager : MonoBehaviour {
     /// </summary>
     protected List<Card> cards = new List<Card>();
 
+    /// <summary>
+    /// Counter-clockwise rounds by default;
+    /// </summary>
+    protected bool roundDirection = false;
+    /// <summary>
+    /// The actual player.
+    /// </summary>
+    protected Player currentPlayer;
+
 
     /// <summary>
     /// static reference to this (the current game manager) object.
@@ -47,6 +56,18 @@ public class GameManager : MonoBehaviour {
     private void Start()
     {
     }
+
+    /// <summary>
+    /// Sets frame for cards that are available to use.
+    /// </summary>
+    /// <param name="card">Card to check.</param>
+    virtual public void SetCardFrame(Card card) { }
+
+    /// <summary>
+    /// Sets block for cards that are available to use.
+    /// </summary>
+    /// <param name="card">Card to check.</param>
+    virtual public void SetCardBlock(Card card) { }
 
     /// <summary>
     /// Sort the player list, to for a round in the game. Player world positions are optimized by view not by game order.

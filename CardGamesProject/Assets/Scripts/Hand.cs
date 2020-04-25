@@ -6,10 +6,6 @@ using UnityEngine;
 /// </summary>
 public class Hand : MonoBehaviour {
     /// <summary>
-    /// GameManager Reference to be able to call game over methods, or tell it to refresh the deck, etc.
-    /// </summary>
-    private GameManager gameManager;
-    /// <summary>
     /// Contained cards.
     /// </summary>
     private List<Card> cards = new List<Card>();
@@ -21,21 +17,65 @@ public class Hand : MonoBehaviour {
     /// Is this hand the owner of the current turn.
     /// </summary>
     private bool isInTurn = false;
+    /// <summary>
+    /// Is the current players hand or it is a dummy.
+    /// </summary>
+    public bool isPlayer = false;
 
     /// <summary>
-    /// Event for putting a card to the pile.
+    /// Delegate of end turn.
     /// </summary>
-    /// <param name="sender">The current player.</param>
+    /// <param name="sender">The player owning this hand.</param>
+    /// <param name="chosenCard">The card chosen to throw on the pile.</param>
     public delegate void EndOfTurnEvent(Player sender, Card chosenCard);
+    /// <summary>
+    /// Turn end event.
+    /// </summary>
     public event EndOfTurnEvent EndOfTurn;
+    /// <summary>
+    /// Delegate for setting card frame.
+    /// </summary>
+    /// <param name="c">Card.</param>
+    public delegate void IsCardAvailable(Card c);
+    /// <summary>
+    /// Delegate instance.
+    /// </summary>
+    public IsCardAvailable isCardAvailable;
+    /// <summary>
+    /// Delegate for setting card block.
+    /// </summary>
+    /// <param name="c">Card.</param>
+    public delegate void IsCardUnavailable(Card c);
+    /// <summary>
+    /// Delegate instance.
+    /// </summary>
+    public IsCardAvailable isCardUnavailable;
 
+    /// <summary>
+    /// sets the deck to draw form.
+    /// </summary>
+    /// <param name="d">Deck to draw from.</param>
     public void SetDeck(Deck d) {
         deck = d;
     }
 
+    /// <summary>
+    /// Start the players turn.
+    /// </summary>
     public void SetTurn()
     {
         isInTurn = true;
+
+        if (isPlayer) //If this hand is the users hand....
+        {
+            foreach (Card card in cards)
+            {
+                if (isCardAvailable != null)
+                    isCardAvailable(card);
+                if (isCardUnavailable != null)
+                    isCardUnavailable(card);
+            }
+        }
     }
 
     /// <summary>
@@ -70,9 +110,8 @@ public class Hand : MonoBehaviour {
     {
         if (EndOfTurn != null)
         {
-            isInTurn = false;
             cards.Remove(c);
-            EndOfTurn(transform.parent.GetComponent<Player>(), c);
+            EndTurn(c);
         }
         PositionCards();
     }
@@ -84,11 +123,25 @@ public class Hand : MonoBehaviour {
     {
         if (EndOfTurn != null && isInTurn)
         {
-            isInTurn = false;
             Card c = cards[idx];
             cards.RemoveAt(idx);
-            EndOfTurn(transform.parent.GetComponent<Player>(), c);
+            EndTurn(c);
         }
         PositionCards();
+    }
+
+    /// <summary>
+    /// End the users turn, and do whatever needed on turn end. Also passes the chosen card to the player.
+    /// </summary>
+    /// <param name="c">Chosen card.</param>
+    private void EndTurn(Card c)
+    {
+        isInTurn = false;
+        EndOfTurn(transform.parent.GetComponent<Player>(), c);
+        foreach (Card card in cards)
+        {
+            card.ToggleBlock(false);
+            card.ToggleFrame(false);
+        }
     }
 }

@@ -15,6 +15,10 @@ public class Pile : MonoBehaviour
     /// </summary>
     private List<Card> cards = new List<Card>();
 
+    /// <summary>
+    /// Add card to the pile.
+    /// </summary>
+    /// <param name="card">New card.</param>
     public void AddCard(Card card)
     {
         cards.Add(card);
@@ -51,5 +55,4 @@ public class Pile : MonoBehaviour
             cards[i].SetOrderInLayer(i); // dont need to know (sets order in layer, which defines which sprite to draw later, so which one is in front)
         }
     }
-
 }
