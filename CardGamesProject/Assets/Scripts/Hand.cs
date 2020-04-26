@@ -13,15 +13,15 @@ public class Hand : MonoBehaviour {
     /// Deck to draw cards from.
     /// </summary>
     private Deck deck;
+
     /// <summary>
     /// Is this hand the owner of the current turn.
     /// </summary>
-    private bool isInTurn = false;
+    public bool isInTurn = false;
     /// <summary>
     /// Is the current players hand or it is a dummy.
     /// </summary>
     public bool isPlayer = false;
-
     /// <summary>
     /// Delegate of end turn.
     /// </summary>
@@ -84,7 +84,9 @@ public class Hand : MonoBehaviour {
     public void DrawCard()
     {
         if (deck == null) return;
-        cards.Add(deck.DrawCard());
+        Card card = deck.DrawCard();
+        card.currentHand = this;
+        cards.Add(card);
         PositionCards();
     }
 
@@ -96,7 +98,7 @@ public class Hand : MonoBehaviour {
         for (int i = 0; i < cards.Count; i++)
         {
             cards[i].transform.parent = transform; //order in hierarchy
-            cards[i].SetCardTransform(new Vector3((i * 1) - ((cards.Count - 1) / 2.0f), 0, 0), new Vector3(0, 180, 0)); //Set card position and rotation.
+            cards[i].SetCardTransform(new Vector3((i * 1) - ((cards.Count - 1) / 2.0f), 0, i * 0.01f), new Vector3(0, 180, 0)); //Set card position and rotation.
             cards[i].SetOrderInLayer(-i); // dont need to know (sets order in layer, which defines which sprite to draw later, so which one is in front)
         }
     }
@@ -109,6 +111,7 @@ public class Hand : MonoBehaviour {
     {
         if (EndOfTurn != null)
         {
+            c.currentHand = null;
             cards.Remove(c);
             EndTurn(c);
         }
@@ -123,6 +126,7 @@ public class Hand : MonoBehaviour {
         if (EndOfTurn != null && isInTurn)
         {
             Card c = cards[idx];
+            c.currentHand = null;
             cards.RemoveAt(idx);
             EndTurn(c);
         }

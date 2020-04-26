@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class Card : MonoBehaviour {
 
     /// <summary>
-    /// Value of the card like: "Spades 5" or "Red 0"
+    /// Value of the card like: "Spades_5" or "Red_0"
     /// </summary>
     private string value;
     /// <summary>
@@ -33,13 +33,33 @@ public class Card : MonoBehaviour {
     /// </summary>
     public Vector3 localPos;
     /// <summary>
+    /// Original Scale.
+    /// </summary>
+    public Vector3 localScaleBase;
+    /// <summary>
+    /// Current local scale. This is set when you want the card be resized temprarily.
+    /// </summary>
+    public Vector3 localScale;
+    /// <summary>
     /// Current rotation. This is set when you want the card to rotate.
     /// </summary>
     public Quaternion localRot;
     /// <summary>
+    /// Reference to hand.
+    /// </summary>
+    public Hand currentHand;
+    /// <summary>
     /// property of value
     /// </summary>
     public string Value { get { return value; } }
+
+    /// <summary>
+    /// Unity calls this once after object initialization. (awake -> start -> update(infinite loop))
+    /// </summary>
+    private void Start()
+    {
+        localScale = localScaleBase = transform.localScale;
+    }
 
     /// <summary>
     /// Unity calls this on every frame. (awake -> start -> update(infinite loop))
@@ -48,6 +68,33 @@ public class Card : MonoBehaviour {
     {
         transform.localPosition = Vector3.Lerp(transform.localPosition, localPos, Time.deltaTime / 0.35f);
         transform.localRotation = Quaternion.Lerp(transform.localRotation, localRot, Time.deltaTime / 0.35f);
+        transform.localScale = Vector3.Lerp(transform.localScale, localScale, Time.deltaTime / 0.35f);
+    }
+
+    /// <summary>
+    /// Mouse start hovering over it.
+    /// </summary>
+    private void OnMouseEnter()
+    {
+        if (!block.enabled && currentHand.isPlayer && currentHand.isInTurn)
+            localScale *= 1.2f;
+    }
+
+    /// <summary>
+    /// Mouse stops hovering over it.
+    /// </summary>
+    private void OnMouseExit()
+    {
+        localScale = localScaleBase;
+    }
+
+    /// <summary>
+    /// Mouse click on card.
+    /// </summary>
+    private void OnMouseDown()
+    {
+        if (!block.enabled && currentHand.isPlayer && currentHand.isInTurn)
+            currentHand.ChooseCard(this);
     }
 
     /// <summary>
