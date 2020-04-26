@@ -26,10 +26,29 @@ public class Card : MonoBehaviour {
     /// Frame sprite renderer. Used for displaying playable or special effects cards.
     /// </summary>
     private SpriteRenderer frame;
+
+
+    /// <summary>
+    /// Current local position. This is set when you want the card to go to a position.
+    /// </summary>
+    public Vector3 localPos;
+    /// <summary>
+    /// Current rotation. This is set when you want the card to rotate.
+    /// </summary>
+    public Quaternion localRot;
     /// <summary>
     /// property of value
     /// </summary>
     public string Value { get { return value; } }
+
+    /// <summary>
+    /// Unity calls this on every frame. (awake -> start -> update(infinite loop))
+    /// </summary>
+    private void Update()
+    {
+        transform.localPosition = Vector3.Lerp(transform.localPosition, localPos, Time.deltaTime / 0.35f);
+        transform.localRotation = Quaternion.Lerp(transform.localRotation, localRot, Time.deltaTime / 0.35f);
+    }
 
     /// <summary>
     /// Setting the card up. Loading and settings up its visuals, and value
@@ -39,6 +58,9 @@ public class Card : MonoBehaviour {
     /// <param name="_value">Value of the card.</param>
     public void build(string _block, string _front, string _frame, string _back, string _value)
     {
+        transform.localPosition = localPos = Vector3.zero;
+        transform.localRotation = localRot = Quaternion.Euler(0, 0, 0);
+
         value = _value; // setting value
         block = transform.Find("Block").GetComponent<SpriteRenderer>(); //SpriteRenderer is what makes the sprite visible.
         front = transform.Find("Front").GetComponent<SpriteRenderer>(); //SpriteRenderer is what makes the sprite visible.
@@ -52,6 +74,17 @@ public class Card : MonoBehaviour {
 
         block.enabled = false;
         frame.enabled = false;
+    }
+
+    /// <summary>
+    /// Set the cards desired position and rotation.
+    /// </summary>
+    /// <param name="_localPos">Desired position.</param>
+    /// <param name="_localRot">Desired rotation by Euler.</param>
+    public void SetCardTransform(Vector3 _localPos, Vector3 _localRot)
+    {
+        localPos = _localPos;
+        localRot = Quaternion.Euler(_localRot.x, _localRot.y, _localRot.z);
     }
 
     /// <summary>

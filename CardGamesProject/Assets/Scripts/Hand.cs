@@ -96,8 +96,7 @@ public class Hand : MonoBehaviour {
         for (int i = 0; i < cards.Count; i++)
         {
             cards[i].transform.parent = transform; //order in hierarchy
-            cards[i].transform.localPosition = new Vector3((i * 1) - ((cards.Count - 1) / 2.0f), 0, 0); //set position based on index
-            cards[i].transform.localRotation = Quaternion.Euler(0, 180, 0); // rotation
+            cards[i].SetCardTransform(new Vector3((i * 1) - ((cards.Count - 1) / 2.0f), 0, 0), new Vector3(0, 180, 0)); //Set card position and rotation.
             cards[i].SetOrderInLayer(-i); // dont need to know (sets order in layer, which defines which sprite to draw later, so which one is in front)
         }
     }

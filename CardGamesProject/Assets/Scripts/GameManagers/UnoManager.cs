@@ -59,7 +59,6 @@ public class UnoManager : GameManager {
         // TESTING
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        //StartCoroutine(TestRun());
         currentPlayer = players[Random.Range(0, players.Count)];
         currentPlayer.GetHand().SetTurn();
     }

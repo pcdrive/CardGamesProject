@@ -76,9 +76,9 @@ public class Deck : MonoBehaviour {
         {
             Transform cardTransform = card.gameObject.transform;
             cardTransform.parent = transform;
-            cardTransform.rotation = Quaternion.Euler(90, 0, 0);
-            cardTransform.localPosition = new Vector3(0, 0.005f * (i++), 0);
+            card.SetCardTransform(new Vector3(0, 0.005f * (i), 0), new Vector3(90, 0, 0)); //Set card position and rotation.
             card.SetOrderInLayer(i);
+            i++;
         }
     }
 }

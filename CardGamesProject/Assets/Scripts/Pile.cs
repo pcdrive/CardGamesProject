@@ -33,8 +33,7 @@ public class Pile : MonoBehaviour
         for (int i = 0; i < cards.Count; i++)
         {
             cards[i].transform.parent = transform; //order in hierarchy
-            cards[i].transform.localPosition = new Vector3(Random.Range(0, 0.3f),  0.005f * i, Random.Range(0, 0.3f)); //set position based on index
-            cards[i].transform.localRotation = Quaternion.Euler(-90, 165 + Random.Range(0,30), 0); // rotation
+            cards[i].SetCardTransform(new Vector3(Random.Range(0, 0.3f), 0.005f * i, Random.Range(0, 0.3f)), new Vector3(-90, 165 + Random.Range(0, 30), 0)); //Set card position and rotation.
             cards[i].SetOrderInLayer(i); // dont need to know (sets order in layer, which defines which sprite to draw later, so which one is in front)
         }
     }
@@ -49,8 +48,7 @@ public class Pile : MonoBehaviour
             if (i == cards.Count - 1)
             {
                 cards[i].transform.parent = transform; //order in hierarchy
-                cards[i].transform.localPosition = new Vector3(Random.Range(0, 0.3f), 0.005f * i, Random.Range(0, 0.3f)); //set position based on index
-                cards[i].transform.localRotation = Quaternion.Euler(-90, 165 + Random.Range(0, 30), 0); // rotation
+                cards[i].SetCardTransform(new Vector3(Random.Range(0, 0.3f), 0.005f * i, Random.Range(0, 0.3f)), new Vector3(-90, 165 + Random.Range(0, 30), 0)); //Set card position and rotation.
             }
             cards[i].SetOrderInLayer(i); // dont need to know (sets order in layer, which defines which sprite to draw later, so which one is in front)
         }
