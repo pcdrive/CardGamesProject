@@ -63,15 +63,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Card.cs" />
-    <Compile Include="Assets\Scripts\Deck.cs" />
-    <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Card.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Deck.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Hand.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Pile.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Player.cs" />
     <Compile Include="Assets\Scripts\GameManagers\BlackJackManager.cs" />
+    <Compile Include="Assets\Scripts\GameManagers\GameManager.cs" />
     <Compile Include="Assets\Scripts\GameManagers\PokerManager.cs" />
     <Compile Include="Assets\Scripts\GameManagers\UnoManager.cs" />
-    <Compile Include="Assets\Scripts\Hand.cs" />
-    <Compile Include="Assets\Scripts\Pile.cs" />
-    <Compile Include="Assets\Scripts\Player.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/novat/Desktop/CardGamesProject/CardGamesProject/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

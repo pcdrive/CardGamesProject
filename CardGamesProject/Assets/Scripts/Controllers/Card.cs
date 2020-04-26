@@ -76,7 +76,8 @@ public class Card : MonoBehaviour {
     /// </summary>
     private void OnMouseEnter()
     {
-        if (!block.enabled && currentHand.isPlayer && currentHand.isInTurn)
+        if (currentHand != null)
+            if (!block.enabled && currentHand.isPlayer && currentHand.isInTurn)
             localScale *= 1.2f;
     }
 
@@ -93,7 +94,8 @@ public class Card : MonoBehaviour {
     /// </summary>
     private void OnMouseDown()
     {
-        if (!block.enabled && currentHand.isPlayer && currentHand.isInTurn)
+        if (currentHand != null)
+            if (!block.enabled && currentHand.isPlayer && currentHand.isInTurn)
             currentHand.ChooseCard(this);
     }
 
